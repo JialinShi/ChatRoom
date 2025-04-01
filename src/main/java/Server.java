@@ -34,7 +34,7 @@ public class Server {
             //创建新线程处理这个客户端
             ClientHandler handler = new ClientHandler(clientSocket, clientWriters);
             Thread thread = new Thread(handler);
-            thread.start();
+            thread.start(); // 运行这一行时，Java会创建真正的新县城，然后在这个线程中自动调用run()方法
         }
 
     }

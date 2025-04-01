@@ -21,7 +21,7 @@ public class Client {
             //创建reader/writer
             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in)); //用户输入
             BufferedReader reader = new BufferedReader((new InputStreamReader((socket.getInputStream())))); //读取
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true); //写出
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true); //写数据发给服务器
 
             //创建接受线程：不断从服务器读消息
             Thread receiveThread = new Thread(() ->{
@@ -39,7 +39,7 @@ public class Client {
             //主线程： 读取用户输入并发送
             String input;
             while((input = userInput.readLine()) != null ){
-                writer.println(input);
+                writer.println(input); // 这是写数据进socket ， 发送给服务器
             }
             socket.close(); //用户输入结束后退出
 

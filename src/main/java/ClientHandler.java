@@ -41,7 +41,7 @@ public class ClientHandler implements  Runnable{
             /**共享资源 + 多线程访问 → 必须加锁
              一行代码也可能“非原子”
              不是代码多才加锁，是资源易冲突就加锁*/
-            synchronized (clientWriters){
+            synchronized (clientWriters){ // 进入广播单
                 clientWriters.add(writer);
             }
         }catch (IOException e){
@@ -50,15 +50,15 @@ public class ClientHandler implements  Runnable{
     }
 
     @Override
-    public void run() {
+    public void run() { // Thread 的构造方法接受这个runnable对象
         String msg;
         try {
-            while ((msg = reader.readLine()) != null){
+            while ((msg = reader.readLine()) != null){ // server 从每个客户端读信息
                 System.out.println("Received: "+ msg);
 
                 synchronized (clientWriters){
                     for(PrintWriter pw:clientWriters){
-                        pw.println(msg);
+                        pw.println(msg); //再去挨个广播给所有人
                     }
                 }
             }
